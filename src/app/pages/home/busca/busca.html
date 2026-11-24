@@ -1,0 +1,47 @@
+<div class="container py-5 text-light">
+  <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-dark pb-3">
+    <h2>
+      Resultados para: <span class="text-info">{{ termoBuscado || 'Todos os Produtos' }}</span>
+    </h2>
+    <span class="badge bg-secondary fs-6">{{ produtosFiltrados.length }} produto(s) encontrado(s)</span>
+  </div>
+
+  <div *ngIf="carregando" class="text-center py-5">
+    <div class="spinner-border text-info" role="status">
+      <span class="visually-hidden">Buscando produtos...</span>
+    </div>
+  </div>
+
+  <div class="row g-4" *ngIf="!carregando && produtosFiltrados.length > 0">
+    <div class="col-12 col-sm-6 col-lg-3" *ngFor="let produto of produtosFiltrados">
+      <div class="product-card h-100 d-flex flex-column border border-secondary rounded p-2 bg-dark">
+        <div class="product-img-wrapper text-center" [routerLink]="['/detalhe']" [queryParams]="{ id: produto.codigo }">
+          <img
+            [src]="produto.imagem || '/logo.png'"
+            [alt]="produto.nome"
+            class="product-img img-fluid"
+            style="height: 200px; object-fit: contain; cursor: pointer;"
+          >
+        </div>
+        <div class="p-3 d-flex flex-column flex-grow-1">
+          <span class="badge bg-danger mb-2 align-self-start">{{ produto.marca || 'Instrumento' }}</span>
+          <h5 class="mb-1 fs-6 text-light">{{ produto.nome }}</h5>
+          <p class="text-info fw-bold fs-5 mt-auto mb-3">R$ {{ produto.valor | number:'1.2-2' }}</p>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-info flex-grow-1" [routerLink]="['/detalhe']" [queryParams]="{ id: produto.codigo }">
+              Detalhes
+            </button>
+            <button class="btn btn-info flex-grow-1" (click)="adicionarAoCarrinho(produto)">
+              COMPRAR
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!carregando && produtosFiltrados.length === 0" class="text-center py-5">
+    <p class="fs-4 text-secondary">Nenhum produto encontrado com este termo.</p>
+    <a routerLink="/" class="btn btn-outline-info">Voltar à página inicial</a>
+  </div>
+</div>

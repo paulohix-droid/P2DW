@@ -1,0 +1,130 @@
+<div id="header-container">
+  <header id="main-header" class="py-3">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <!-- Logo -->
+      <a routerLink="/" class="logo-text d-flex align-items-center gap-2 text-decoration-none">
+        <img src="/logo.png" alt="Logo 90's AudioStore" style="height: 50px;">
+        <div class="brand-title">90's Guitar<span>Store</span></div>
+      </a>
+
+      <!-- Barra de Pesquisa -->
+      <div class="d-flex align-items-center flex-grow-1 mx-lg-4" style="max-width: 500px;">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control bg-dark text-light border-secondary"
+            placeholder="Buscar guitarras, marcas..."
+            #campoBusca
+            (keyup.enter)="fazerBusca(campoBusca.value)"
+          >
+          <button class="btn btn-outline-info" type="button" (click)="fazerBusca(campoBusca.value)">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Usuário / Login -->
+      <div class="d-flex align-items-center gap-2">
+        <ng-container *ngIf="clienteLogado; else deslogado">
+          <span class="text-info small fw-bold">Olá, {{ clienteLogado.nome }}</span>
+          <button class="btn btn-sm btn-outline-secondary" (click)="logout()" title="Sair">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </ng-container>
+        <ng-template #deslogado>
+          <button
+            class="btn btn-outline-light btn-sm d-flex align-items-center gap-1"
+            data-bs-toggle="modal"
+            data-bs-target="#loginModal"
+          >
+            <i class="fa-solid fa-circle-user"></i>
+            <span>Entrar</span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Menu de Navegação -->
+    <div class="container mt-3 pt-2">
+      <nav class="nav-menu d-flex justify-content-center flex-wrap gap-4 mt-2">
+        <a routerLink="/">Home</a>
+        <a routerLink="/busca" [queryParams]="{ q: 'Fender' }">Fender</a>
+        <a routerLink="/busca" [queryParams]="{ q: 'Gibson' }">Gibson</a>
+        <a routerLink="/busca" [queryParams]="{ q: 'Acústicas' }">Acústicas</a>
+        <a routerLink="/cesta"><i class="fa-solid fa-cart-shopping me-1"></i> Cesta</a>
+        <a routerLink="/esqueci-senha" class="text-info text-decoration-none small">Esqueceu a Senha?</a>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<!-- Modal de Login e Cadastro -->
+<div class="modal fade text-dark" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title" id="loginModalLabel">Área do Cliente</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs border-secondary mb-3" id="authTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active text-info" id="login-tab" data-bs-toggle="tab" data-bs-target="#tab-login" type="button" role="tab">Entrar</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-info" id="cadastro-tab" data-bs-toggle="tab" data-bs-target="#tab-cadastro" type="button" role="tab">Cadastrar</button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="authTabsContent">
+          <!-- Aba de Login -->
+          <div class="tab-pane fade show active" id="tab-login" role="tabpanel">
+            <div *ngIf="mensagemLogin" class="alert alert-info py-2">{{ mensagemLogin }}</div>
+            <form (ngSubmit)="realizarLogin()">
+              <div class="mb-3">
+                <label class="form-label">E-mail</label>
+                <input type="email" class="form-control bg-black text-light border-secondary" [(ngModel)]="loginForm.email" name="loginEmail" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Senha</label>
+                <input type="password" class="form-control bg-black text-light border-secondary" [(ngModel)]="loginForm.senha" name="loginSenha" required>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <a routerLink="/esqueci-senha" data-bs-dismiss="modal" class="small text-info text-decoration-none">Esqueceu a senha?</a>
+              </div>
+              <button type="submit" class="btn btn-info w-100 fw-bold">Entrar</button>
+            </form>
+          </div>
+
+          <!-- Aba de Cadastro -->
+          <div class="tab-pane fade" id="tab-cadastro" role="tabpanel">
+            <div *ngIf="mensagemCadastro" class="alert alert-success py-2">{{ mensagemCadastro }}</div>
+            <form (ngSubmit)="realizarCadastro()">
+              <div class="mb-2">
+                <label class="form-label">Nome Completo</label>
+                <input type="text" class="form-control bg-black text-light border-secondary" [(ngModel)]="cadastroForm.nome" name="cadNome" required>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">E-mail</label>
+                <input type="email" class="form-control bg-black text-light border-secondary" [(ngModel)]="cadastroForm.email" name="cadEmail" required>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Documento (CPF)</label>
+                <input type="text" class="form-control bg-black text-light border-secondary" [(ngModel)]="cadastroForm.documento" name="cadDoc">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Telefone</label>
+                <input type="text" class="form-control bg-black text-light border-secondary" [(ngModel)]="cadastroForm.telefone" name="cadTel">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Senha</label>
+                <input type="password" class="form-control bg-black text-light border-secondary" [(ngModel)]="cadastroForm.senha" name="cadSenha" required>
+              </div>
+              <button type="submit" class="btn btn-info w-100 fw-bold">Criar Conta</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

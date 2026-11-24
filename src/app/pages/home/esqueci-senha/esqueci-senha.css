@@ -1,0 +1,37 @@
+.bg-hachurado {
+    background: repeating-linear-gradient(
+        -45deg,
+        #0a0a0a,
+        #0a0a0a 15px,
+        #141414 15px,
+        #141414 30px
+    );
+    min-height: calc(100vh - 80px); /* Desconta o tamanho do header */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.auth-card {
+    background: rgba(20, 20, 20, 0.95);
+    padding: 3rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    border: 1px solid #333;
+    width: 100%;
+    max-width: 480px;
+}
+
+.form-control {
+    background-color: #222;
+    border-color: #444;
+    color: #fff;
+}
+
+.form-control:focus {
+    background-color: #2a2a2a;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+    color: #fff;
+}

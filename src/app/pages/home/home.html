@@ -1,0 +1,36 @@
+<section id="vitrine" class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-4 border-bottom border-dark pb-2">
+      <h2 class="fw-bold m-0"><span style="color: var(--accent-color, #0dcaf0);">/</span> Guitarras Em Destaque</h2>
+      <span *ngIf="carregando" class="spinner-border spinner-border-sm text-info" role="status"></span>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-12 col-sm-6 col-lg-3" *ngFor="let produto of produtosVitrine">
+        <div class="product-card h-100 d-flex flex-column border border-secondary rounded p-2 bg-dark">
+          <div class="product-img-wrapper text-center" [routerLink]="['/detalhe']" [queryParams]="{ id: produto.codigo }">
+            <img
+              [src]="produto.imagem || '/logo.png'"
+              [alt]="produto.nome"
+              class="product-img img-fluid"
+              style="height: 220px; object-fit: contain; cursor: pointer;"
+            >
+          </div>
+          <div class="p-3 d-flex flex-column flex-grow-1">
+            <span class="badge bg-danger mb-2 align-self-start">{{ produto.marca || 'Destaque' }}</span>
+            <h5 class="mb-1 fs-6 text-light">{{ produto.nome }}</h5>
+            <p class="text-info fw-bold fs-5 mt-auto mb-3">R$ {{ produto.valor | number:'1.2-2' }}</p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-info flex-grow-1" [routerLink]="['/detalhe']" [queryParams]="{ id: produto.codigo }">
+                Detalhes
+              </button>
+              <button class="btn btn-info flex-grow-1" (click)="adicionarAoCarrinho(produto)">
+                COMPRAR
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

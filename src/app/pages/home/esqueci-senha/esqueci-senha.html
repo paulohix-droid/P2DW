@@ -1,0 +1,40 @@
+<section id="esqueci-senha-section" class="py-5 text-light">
+  <div class="container d-flex justify-content-center">
+    <div class="card bg-dark text-light border-secondary p-4 shadow" style="max-width: 500px; width: 100%;">
+      <h3 class="fw-bold mb-3 text-info">Recuperação de Senha</h3>
+      <p class="text-secondary small mb-4">
+        Informe o e-mail cadastrado na sua conta. Vamos redefinir sua senha para que você possa voltar a fazer som!
+      </p>
+
+      <div *ngIf="mensagemSucesso" class="alert alert-success">
+        <i class="fa-solid fa-circle-check me-2"></i> {{ mensagemTexto }}
+      </div>
+
+      <form [formGroup]="formRecuperacao" (ngSubmit)="enviar()" *ngIf="!mensagemSucesso">
+        <div class="mb-3">
+          <label class="form-label">E-mail Cadastrado</label>
+          <input
+            type="email"
+            class="form-control bg-black text-light border-secondary"
+            formControlName="email"
+            placeholder="exemplo@email.com"
+          >
+          <div *ngIf="formRecuperacao.get('email')?.touched && formRecuperacao.get('email')?.invalid" class="text-danger small mt-1">
+            Por favor, informe um e-mail válido.
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-info w-100 fw-bold mb-3" [disabled]="carregando">
+          <span *ngIf="carregando" class="spinner-border spinner-border-sm me-2"></span>
+          REDEFINIR SENHA
+        </button>
+      </form>
+
+      <div class="text-center mt-3">
+        <a routerLink="/" class="text-info text-decoration-none small">
+          <i class="fa-solid fa-arrow-left me-1"></i> Voltar para a Loja
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
