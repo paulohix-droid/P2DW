@@ -1,13 +1,13 @@
-export class Produto {
-  codigo: number = 0;
-  nome: string = '';
-  descricao: string = '';
-  descritivo?: string = '';
-  valor: number = 0;
-  valorPromo?: number = 0;
-  quantidade?: number = 0;
-  destaque?: number = 0;
-  imagem?: string = '';
-  detalhes?: string[] = [];
-  marca?: string = '';
+export interface Produto {
+  codigo: number;
+  nome: string;
+  descricao: string;
+  descritivo?: string;
+  valor: number;
+  valorPromo?: number;
+  quantidade?: number;
+  destaque?: number;
+  imagem?: string;
+  detalhes?: string[];
+  marca?: string;
 }

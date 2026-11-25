@@ -1,10 +1,10 @@
-export class Cliente {
-  codigo: number = 0;
-  nome: string = '';
-  telefone: string = '';
-  documento: string = '';
-  senha: string = '';
-  logradouro: string = '';
-  email: string = '';
-  ativo: number = 1;
+export interface Cliente {
+  codigo: number;
+  nome: string;
+  email: string;
+  telefone?: string;
+  documento?: string;
+  senha?: string;
+  logradouro?: string;
+  ativo?: number;
 }

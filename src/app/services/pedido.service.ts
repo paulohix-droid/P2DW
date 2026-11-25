@@ -11,23 +11,23 @@ export class PedidoService {
 
   constructor(private http: HttpClient) {}
 
-  // 1. Buscar Pedido (GET /api/pedido/{codigo})
-  retorna(codigo: number): Observable<Pedido> {
+  // 1. Buscar Pedido - GET /api/pedido/{codigo}
+  buscarPorCodigo(codigo: number): Observable<Pedido> {
     return this.http.get<Pedido>(`${this.baseUrl}/${codigo}`);
   }
 
-  // 2. Cadastrar Pedido (POST /api/pedido)
-  gravar(obj: Pedido): Observable<string> {
-    return this.http.post(this.baseUrl, obj, { responseType: 'text' });
+  // 2. Cadastrar Pedido - POST /api/pedido
+  cadastrar(pedido: Pedido): Observable<string> {
+    return this.http.post(this.baseUrl, pedido, { responseType: 'text' });
   }
 
-  // 3. Alterar Pedido (PUT /api/pedido)
-  alterar(obj: Pedido): Observable<string> {
-    return this.http.put(this.baseUrl, obj, { responseType: 'text' });
+  // 3. Alterar Pedido - PUT /api/pedido
+  alterar(pedido: Pedido): Observable<string> {
+    return this.http.put(this.baseUrl, pedido, { responseType: 'text' });
   }
 
-  // 4. Excluir Pedido (DELETE /api/pedido/{codigo})
-  apagar(codigo: number): Observable<string> {
+  // 4. Excluir Pedido - DELETE /api/pedido/{codigo}
+  excluir(codigo: number): Observable<string> {
     return this.http.delete(`${this.baseUrl}/${codigo}`, { responseType: 'text' });
   }
 }
