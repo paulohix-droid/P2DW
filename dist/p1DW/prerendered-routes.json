@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "/": {},
+    "/busca": {},
+    "/cesta": {},
+    "/detalhe": {},
+    "/esqueci-senha": {}
+  }
+}
