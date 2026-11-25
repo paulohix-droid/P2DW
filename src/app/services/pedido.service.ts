@@ -7,26 +7,26 @@ import { Pedido } from '../models/pedido.model';
   providedIn: 'root'
 })
 export class PedidoService {
-  private readonly baseUrl = '/api/pedido';
+  private readonly baseUrl = 'http://localhost:8080/api/pedido';
 
   constructor(private http: HttpClient) {}
 
-  // 1. Buscar Pedido - GET /api/pedido/{codigo}
-  buscarPorCodigo(codigo: number): Observable<Pedido> {
+  // GET /api/pedido/{codigo}
+  retornaPedido(codigo: number): Observable<Pedido> {
     return this.http.get<Pedido>(`${this.baseUrl}/${codigo}`);
   }
 
-  // 2. Cadastrar Pedido - POST /api/pedido
-  cadastrar(pedido: Pedido): Observable<string> {
-    return this.http.post(this.baseUrl, pedido, { responseType: 'text' });
+  // POST /api/pedido
+  gravar(pedido: Pedido): Observable<string> {
+    return this.http.post(this.baseUrl, { codigoPedido: pedido.codigoPedido }, { responseType: 'text' });
   }
 
-  // 3. Alterar Pedido - PUT /api/pedido
+  // PUT /api/pedido
   alterar(pedido: Pedido): Observable<string> {
-    return this.http.put(this.baseUrl, pedido, { responseType: 'text' });
+    return this.http.put(this.baseUrl, { codigoPedido: pedido.codigoPedido }, { responseType: 'text' });
   }
 
-  // 4. Excluir Pedido - DELETE /api/pedido/{codigo}
+  // DELETE /api/pedido/{codigo}
   excluir(codigo: number): Observable<string> {
     return this.http.delete(`${this.baseUrl}/${codigo}`, { responseType: 'text' });
   }
